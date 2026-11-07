@@ -135,8 +135,9 @@ parse_git_branch() {
 
 #   Change Prompt
 #   ------------------------------------------------------------
-export PS1="|_______________________________________________________________________________\n| \w @ \h (\u)\[\033[0;33m\]\$(parse_git_branch)\[\033[0m\]\n| => "
+export PS1=$'|_______________________________________________________________________________\n| %~ @ %m (%n)%{\033[0;33m%}$(parse_git_branch)%{\033[0m%}\n| => '
 export PS2="| => "
+setopt PROMPT_SUBST
 
 #   Set Default Editor (change 'Nano' to the editor of your choice)
 #   ------------------------------------------------------------
@@ -176,9 +177,9 @@ alias ~="cd ~"                              # ~:            Go Home
 alias c='clear'                             # c:            Clear terminal display
 alias which='type -all'                     # which:        Find executables
 alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable Paths
-alias show_options='shopt'                  # Show_options: display bash options settings
+alias show_options='[[ -n "$BASH_VERSION" ]] && shopt'  # Show_options: display bash options settings
 alias fix_stty='stty sane'                  # fix_stty:     Restore terminal settings when screwed up
-alias cic='set completion-ignore-case On'   # cic:          Make tab-completion case-insensitive
+alias cic='[[ -n "$BASH_VERSION" ]] && set completion-ignore-case On'  # cic: Make tab-completion case-insensitive
 mcd () { mkdir -p "$1" && cd "$1"; }        # mcd:          Makes new Dir and jumps inside
 trash () { command mv "$@" ~/.Trash ; }     # trash:        Moves a file to the MacOS trash
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
